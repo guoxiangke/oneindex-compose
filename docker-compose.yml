@@ -1,0 +1,28 @@
+# docker-compose.yml
+# https://github.com/donwa/oneindex.git
+# https://github.com/TimeBye/oneindex.git
+version: "3"
+services:
+  oneindex:
+    image: setzero/oneindex
+    network_mode: "bridge"
+    restart: always
+    #配合nginx时, 覆盖image的9000
+    expose:
+        - "80"
+    #本地调试端口
+    # ports:
+    #    - 8080:80
+    environment:
+    - REFRESH_TOKEN=0 * * * *
+    - REFRESH_CACHE=*/10 * * * *
+    # - DISABLE_CRON=true
+    # - SSH_PASSWORD=root
+    # - TZ=Asia/Shanghai
+    - VIRTUAL_HOST=1drive.yourdomain.com
+    - LETSENCRYPT_HOST=1drive.yourdomain.com
+    - LETSENCRYPT_EMAIL=your@email.com
+    volumes:
+    - ./config:/var/www/html/config
+    - ./cache:/var/www/html/cache
+    # - ./IndexController.php:/var/www/html/controller/IndexController.php
